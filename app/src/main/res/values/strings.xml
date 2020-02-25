@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Сбор штрихкодов</string>
+    <string name="menu_settings">Settings</string>
+    <string name="barcode">Barcode</string>
+    <string name="btnAutomaticBarcode">Automatic Control</string>
+    <string name="btnClientBarcode">Client Control</string>
+    <string name="btnScannerSelectBarcode">Scanner Selection Example</string>
+    <string name="btnSwitchScanners">Switch Scanners</string>
+    <string name="txtBarcodeTitle">Press the device\'s scan button to scan a barcode.</string>
+    <string name="txtMainTitle">Click on below buttons for options.</string>
+    <string name="txtPreamble">Preamble</string>
+    <string name="editPreamble"></string>
+    <string name="editPostamble"></string>
+    <string name="txtPostamble">Postamble</string>
+
+    <string name="checkDatamatrix">Проверить Datamatrix</string>
+    <string name="newCollecting">Новый сбор Datamatrix</string>
+    <string name="loadCollecting">Загрузить сбор Datamatrix</string>
+    <string name="settings">Настройки</string>
+    <string name="exit">Выход</string>
+    <string name="scanForInfo">Сканируйте Datamatrix, чтобы получить информацию о товаре</string>
+
+</resources>
