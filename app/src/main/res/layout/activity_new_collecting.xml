@@ -21,21 +21,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="Сохранить" />
 
-            <Button
-                android:id="@+id/buttonClose"
+            <ImageButton
+                android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                app:srcCompat="@android:drawable/ic_menu_revert" />
 
         </LinearLayout>
 
         <ListView
             android:id="@+id/listViewCodes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="0">
+
+        </ListView>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

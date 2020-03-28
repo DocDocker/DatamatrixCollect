@@ -4,8 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+
 import android.os.Bundle;
+import android.os.Environment;
+
+import android.view.View;
+
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,9 +24,14 @@ import com.honeywell.aidc.ScannerUnavailableException;
 import com.honeywell.aidc.TriggerStateChangeEvent;
 import com.honeywell.aidc.UnsupportedPropertyException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class NewCollectingActivity extends AppCompatActivity implements BarcodeReader.BarcodeListener,
@@ -82,6 +94,58 @@ public class NewCollectingActivity extends AppCompatActivity implements BarcodeR
         adapter = new ArrayAdapter<String>(
                 NewCollectingActivity.this, android.R.layout.simple_list_item_1, listCodes);
 
+        final Button button = findViewById(R.id.buttonSave);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String textToSave = "";
+
+                for(int i = 0; i < listCodes.size(); i++){
+                    textToSave += listCodes.get(i) + "\n";
+                }
+
+                Long timeStamp = System.currentTimeMillis();
+
+                String fileName = timeStamp.toString() + ".txt";
+
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+
+                try {
+                    FileOutputStream f = new FileOutputStream(file);
+                    PrintWriter pw = new PrintWriter(f);
+                    pw.println(textToSave);
+                    pw.flush();
+                    pw.close();
+                    f.close();
+
+                    Toast.makeText(v.getContext(), "Файл " + fileName + " сохранен!", Toast.LENGTH_SHORT).show();
+
+                } catch (FileNotFoundException e) {
+
+                    Toast.makeText(v.getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+
+                    Toast.makeText(v.getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+
+                }
+
+            }
+        });
+
+        final ImageButton button2 = findViewById(R.id.imageButton);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listCodes.size() > 0) {
+                    listCodes.remove(listCodes.size() - 1);
+                    adapter.notifyDataSetChanged();
+                    button.setText("Сохранить (" + listCodes.size() + ")");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -99,6 +163,9 @@ public class NewCollectingActivity extends AppCompatActivity implements BarcodeR
                     Code = new MarkingCode(RawData);
                     listCodes.add(Code.getUniqueCode());
                     adapter.notifyDataSetChanged();
+
+                    Button button = findViewById(R.id.buttonSave);
+                    button.setText("Сохранить (" + listCodes.size() + ")");
                     // list.add("Barcode data: " + event.getBarcodeData());
                     //list.add("Character Set: " + event.getCharset());
                     //list.add("Code ID: " + event.getCodeId());

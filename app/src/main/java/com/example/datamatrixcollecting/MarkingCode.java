@@ -1,6 +1,8 @@
 package com.example.datamatrixcollecting;
 
-public class MarkingCode {
+import java.io.Serializable;
+
+public class MarkingCode implements Serializable {
 
     private String FullCode;
     private String GTIN;

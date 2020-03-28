@@ -5,7 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -79,7 +84,7 @@ public class CheckDatamatrixActivity extends AppCompatActivity implements Barcod
             @Override
             public void run() {
                 // update UI to reflect the data
-                List<String> list = new ArrayList<String>();
+                List<MarkingCode> list = new ArrayList<>();
 
                 String RawData = event.getBarcodeData();
 
@@ -87,14 +92,14 @@ public class CheckDatamatrixActivity extends AppCompatActivity implements Barcod
 
                 try {
                     Code = new MarkingCode(RawData);
-                    list.add("Полный код:");
-                    list.add(Code.getFullCode());
-                    list.add("Код маркировки:");
-                    list.add(Code.getUniqueCode());
-                    list.add("GTIN:");
-                    list.add(Code.getGTIN());
-                    list.add("Серийный номер:");
-                    list.add(Code.getSerial());
+                    list.add(Code);
+//                    list.add(Code.getFullCode());
+//                    list.add("Код маркировки:");
+//                    list.add(Code.getUniqueCode());
+//                    list.add("GTIN:");
+//                    list.add(Code.getGTIN());
+//                    list.add("Серийный номер:");
+//                    list.add(Code.getSerial());
                     // list.add("Barcode data: " + event.getBarcodeData());
                     //list.add("Character Set: " + event.getCharset());
                     //list.add("Code ID: " + event.getCodeId());
@@ -110,10 +115,8 @@ public class CheckDatamatrixActivity extends AppCompatActivity implements Barcod
                     toast.show();
                 }
 
-                final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-                        CheckDatamatrixActivity.this, android.R.layout.simple_list_item_1, list);
-
-                barcodeList.setAdapter(dataAdapter);
+               // final CustomAdapter dataAdapter = new CustomAdapter
+                //barcodeList.setAdapter(dataAdapter);
             }
         });
     }
@@ -182,4 +185,7 @@ public class CheckDatamatrixActivity extends AppCompatActivity implements Barcod
             barcodeReader.removeTriggerListener(this);
         }
     }
+
+
+
 }
